@@ -1,26 +1,25 @@
 <!DOCTYPE html>
 <html>
- 
     
-<!--    <link rel="stylesheet" type="text/css" href="style.css"/>-->
-    <style>
-    #stvorec {
+<style>
+#stvorec {
     width: 200px;
     height: 150px;
     border: 1px solid black;
     background-color: greenyellow;
+    position: relative;
 }
 
-#stvorec2 {
-    width: 200px;
-    height: 150px;
-    border: 1px solid black;
-    background-color: greenyellow;
-}
 
+    
 canvas {
     border: 1px solid black;
     padding: 0;
+}
+
+    
+#canvasGroup {
+    position: relative;
 }
 
 #canvasTop {
@@ -28,13 +27,15 @@ canvas {
     height: 400px;
     background-color: blue;
     position: absolute;
+    left: 100px;
 }
 
 #canvasMiddle {
     width: 300px;
     height: 300px;
     background-color: green;
-    position: absolute
+    position: absolute;
+    left: 100px;
 }
 
 #canvasDown {
@@ -42,53 +43,84 @@ canvas {
     height: 200px;
     background-color: yellow;
     position: absolute;
+    left: 100px;
 }
+
+    
+#underCanvasGroup {
+    position: relative;
+}
+
     
     
     
-    </style>
+/*
+#divIMG {
+    position: relative;
+}
+#canvasIMG {
+    width: 300px;
+    height: 300px;
+    background-color: black;
+    position: relative;
+    left: 40px;
+}    
+*/
+
+
     
     
+    
+</style>
     
 <body>
 
-  <div id="stvorec"></div>
+    <div id="stvorec">
+        <b id="pomocnyElement">div = novy riadok</b>
+        <br id="pomocny2">Prvy stvorec je len DIVko, NIE canvas</br>
+    </div>
+    
+    <div>
+        <br><button id="buttonColorChange">Farba</button>
+    <button id="buttonImageChange">Obrazok</button>
+    
+    </div>
 
-    
-   
-    
-    <p id="pomocnyElement">oko</p>
-    <button id="buttonZmena">Zmen pomocny element</button>
-    
-    <div id="stvorec2"></div>
-    
-    <div><canvas id="canvasTop"></canvas>
+
+    <div id="divIMG">
+        <canvas id="canvasIMG"></canvas>
+    </div>
+
+
+    <div id="canvasGroup">
+        <canvas id="canvasTop"></canvas>
     </div><div><canvas id="canvasMiddle">
     </canvas></div><div><canvas id="canvasDown"></canvas></div>
-    
-    
 
+
+    
+    <div id="underCanvasGroup">  
+        <img id="4farby" width="220" height="277" src="4farby.jpg" alt="The Scream">
+    </div>
 
     
 <script>
     var pocitadlo = true;
     var color = "blue";
-    var randomText = "pes";
+//    var randomText = "pes";
     var numberSimple = 1;
 
     var divko = document.getElementById("stvorec");
     divko.addEventListener("click", changeColor);
     divko.addEventListener("mousemove", incrementNumber);
 
-    var divko2 = document.getElementById("stvorec2");
-    divko2.addEventListener("mousedown", changeColor);
-    divko2.addEventListener("mousemove", incrementNumber);
-
     var text = document.getElementById("pomocnyElement");
 
-    var button1 = document.getElementById("buttonZmena");
+    var button1 = document.getElementById("buttonColorChange");
     button1.addEventListener("click", changeColor);
-
+    var button2 = document.getElementById("buttonImageChange");
+    button2.addEventListener("click", changeImg);
+    
     function changeColor () {
         if (pocitadlo) {
             color = "blue"
@@ -98,9 +130,14 @@ canvas {
             color = "yellow"
             pocitadlo = true;
         }
-//    divko.innerHTML = pocitadlo;
-    
         canvasDown.style.backgroundColor = color;
+    }
+    
+    function changeImg () {
+        var canvasImage = document.getElementById("canvasIMG");
+        var ctxImg = canvasImage.getContext("2d");
+        var imgCanvas = document.getElementById("4farby");
+        ctxImg.drawImage(imgCanvas, 0, 0, canvasImage.width, canvasImage.height);
     }
 
     function incrementNumber () {
