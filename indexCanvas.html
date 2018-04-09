@@ -82,7 +82,7 @@
 <body>
 
     <div id="containerDIV">
-        <canvas id="canvasIMGTest"></canvas>
+        <canvas id="canvasKorpus"></canvas>
             
     </div>
     
@@ -98,7 +98,9 @@
     <div>
         <br><button id="buttonColorChange">Farba</button>
         <button id="buttonImageChange">Obrazok</button>
-        <button id="vlozObrazok">Vloz obrazok</button>
+        <button id="btnVlozKorpus">Vloz korpus</button>
+        <button id="btnVlozSuflik">Vloz suflik</button>
+        
     
     </div>
 
@@ -138,11 +140,14 @@
     button1.addEventListener("click", changeColor);
     var button2 = document.getElementById("buttonImageChange");
     button2.addEventListener("click", changeImg);
-    var buttonVloz = document.getElementById("vlozObrazok");
-    buttonVloz.addEventListener("click", insertPicture);
+    var btnKorpus = document.getElementById("btnVlozKorpus");
+    btnKorpus.addEventListener("click", insertPicKorpus);
+    var btnSuflik = document.getElementById("btnVlozSuflik");
+    btnSuflik.addEventListener("click", insertSuflik);
+    
 
-    var canvasIMGTest = document.getElementById("canvasIMGTest");
-    var ctxImgTest = canvasIMGTest.getContext("2d");
+    var canvasKorpus = document.getElementById("canvasKorpus");
+    var ctxKorpus = canvasKorpus.getContext("2d");
     
     
     function changeColor () {
@@ -169,26 +174,38 @@
         text.innerHTML = numberSimple;
     }
     
-    function insertPicture() {
+    function insertPicKorpus() {
         var picture = new Image();
         picture.src = "regal_korpus.jpg";
         picture.onload = function() {
             var width = picture.naturalWidth;
             var height = picture.naturalHeight;
-            canvasIMGTest.width = width;
-            canvasIMGTest.height = height;
-            ctxImgTest.drawImage(picture, 0, 0, width, height);
-            
+            canvasKorpus.width = width;
+            canvasKorpus.height = height;
+            ctxKorpus.drawImage(picture, 0, 0, width, height);
         }
     }
     
+    function insertSuflik() {
+        var picture = new Image();
+        picture.src = "suflik1.jpg";
+        ctxKorpus.drawImage(picture, 205,266,458,225)
+        
+    }
+    
+    
+    
     function initCanvas() {
-        ctxImgTest.canvas.addEventListener('mousemove', function(event){
-        var mouseX = event.clientX - ctxImgTest.canvas.offsetLeft;
-        var mouseY = event.clientY - ctxImgTest.canvas.offsetTop;
-        var status = document.getElementById('koordinaty');
-        koordinaty.innerHTML = mouseX+" | "+mouseY;
-    });
+        ctxKorpus.canvas.addEventListener('mousemove', function(event){
+            var mouseX = event.clientX - ctxKorpus.canvas.offsetLeft;
+            var mouseY = event.clientY - ctxKorpus.canvas.offsetTop;
+            koordinaty.innerHTML = mouseX+" | "+mouseY;
+        });
+        ctxKorpus.canvas.addEventListener("click", function(e) {
+            var mouseX = event.clientX - ctxKorpus.canvas.offsetLeft;
+            var mouseY = event.clientY - ctxKorpus.canvas.offsetTop;
+            koordinatyClick.innerHTML = mouseX+" | "+mouseY;
+        })
     }
     
     window.addEventListener('load', function(event) {
