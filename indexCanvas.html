@@ -2,31 +2,44 @@
 <html>
     
 <style>
-#stvorec {
-    width: 200px;
-    height: 150px;
-    border: 1px solid black;
-    background-color: greenyellow;
-    position: relative;
-}
+    * {
+        margin: 0;
+        padding: 0;
+    }
+    
+    #containerDIV {
+        
+        
+    }
+    
+    #canvasIMGTest {
+/*        border: 1px solid black;*/
+    }
+    
+    canvas {
+        border: 1px solid black;
+        padding: 0;
+    }
+    
+
+    #stvorec {
+        width: 200px;
+        height: 150px;
+        border: 1px solid black;
+        background-color: greenyellow;
+        position: relative;
+    }
+
+    
 
 
     
-canvas {
-    border: 1px solid black;
-    padding: 0;
-}
-
-    
-#canvasGroup {
-    position: relative;
-}
 
 #canvasTop {
     width: 400px;
     height: 400px;
     background-color: blue;
-    position: absolute;
+/*    position: absolute;*/
     left: 100px;
 }
 
@@ -34,7 +47,7 @@ canvas {
     width: 300px;
     height: 300px;
     background-color: green;
-    position: absolute;
+/*    position: absolute;*/
     left: 100px;
 }
 
@@ -42,30 +55,23 @@ canvas {
     width: 200px;
     height: 200px;
     background-color: yellow;
-    position: absolute;
+/*    position: absolute;*/
     left: 100px;
 }
 
     
-#underCanvasGroup {
-    position: relative;
-}
-
     
     
-    
-/*
 #divIMG {
     position: relative;
 }
 #canvasIMG {
-    width: 300px;
-    height: 300px;
-    background-color: black;
+    width: 500px;
+    height: 500px;
+/*    background-color: black;*/
     position: relative;
     left: 40px;
 }    
-*/
 
 
     
@@ -75,14 +81,24 @@ canvas {
     
 <body>
 
+    <div id="containerDIV">
+        <canvas id="canvasIMGTest"></canvas>
+            
+    </div>
+    
+    
+    
     <div id="stvorec">
-        <b id="pomocnyElement">div = novy riadok</b>
-        <br id="pomocny2">Prvy stvorec je len DIVko, NIE canvas</br>
+        <b id="pomocnyElement">div = novy riadok</b><br>
+        <b id="pomocny2">Prvy stvorec je len DIVko, NIE canvas</b><br>
+        <b id="koordinaty">X / Y</b><br>
+        <b id="koordinatyClick">X / Y</b>
     </div>
     
     <div>
         <br><button id="buttonColorChange">Farba</button>
-    <button id="buttonImageChange">Obrazok</button>
+        <button id="buttonImageChange">Obrazok</button>
+        <button id="vlozObrazok">Vloz obrazok</button>
     
     </div>
 
@@ -93,9 +109,9 @@ canvas {
 
 
     <div id="canvasGroup">
-        <canvas id="canvasTop"></canvas>
-    </div><div><canvas id="canvasMiddle">
-    </canvas></div><div><canvas id="canvasDown"></canvas></div>
+        <canvas id="canvasTop">
+        </canvas><canvas id="canvasMiddle"></canvas><canvas id="canvasDown"></canvas>
+    </div>
 
 
     
@@ -105,6 +121,8 @@ canvas {
 
     
 <script>
+    
+    
     var pocitadlo = true;
     var color = "blue";
 //    var randomText = "pes";
@@ -120,6 +138,12 @@ canvas {
     button1.addEventListener("click", changeColor);
     var button2 = document.getElementById("buttonImageChange");
     button2.addEventListener("click", changeImg);
+    var buttonVloz = document.getElementById("vlozObrazok");
+    buttonVloz.addEventListener("click", insertPicture);
+
+    var canvasIMGTest = document.getElementById("canvasIMGTest");
+    var ctxImgTest = canvasIMGTest.getContext("2d");
+    
     
     function changeColor () {
         if (pocitadlo) {
@@ -130,14 +154,14 @@ canvas {
             color = "yellow"
             pocitadlo = true;
         }
-        canvasDown.style.backgroundColor = color;
+        canvasIMG.style.backgroundColor = color;
     }
     
     function changeImg () {
         var canvasImage = document.getElementById("canvasIMG");
         var ctxImg = canvasImage.getContext("2d");
         var imgCanvas = document.getElementById("4farby");
-        ctxImg.drawImage(imgCanvas, 0, 0, canvasImage.width, canvasImage.height);
+        ctxImg.drawImage(imgCanvas, 10, 10, canvasImage.width-20, canvasImage.height-20);
     }
 
     function incrementNumber () {
@@ -145,7 +169,31 @@ canvas {
         text.innerHTML = numberSimple;
     }
     
+    function insertPicture() {
+        var picture = new Image();
+        picture.src = "regal_korpus.jpg";
+        picture.onload = function() {
+            var width = picture.naturalWidth;
+            var height = picture.naturalHeight;
+            canvasIMGTest.width = width;
+            canvasIMGTest.height = height;
+            ctxImgTest.drawImage(picture, 0, 0, width, height);
+            
+        }
+    }
     
+    function initCanvas() {
+        ctxImgTest.canvas.addEventListener('mousemove', function(event){
+        var mouseX = event.clientX - ctxImgTest.canvas.offsetLeft;
+        var mouseY = event.clientY - ctxImgTest.canvas.offsetTop;
+        var status = document.getElementById('koordinaty');
+        koordinaty.innerHTML = mouseX+" | "+mouseY;
+    });
+    }
+    
+    window.addEventListener('load', function(event) {
+    initCanvas();
+});
     
 </script>
     
