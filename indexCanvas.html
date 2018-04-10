@@ -140,14 +140,10 @@
     button1.addEventListener("click", changeColor);
     var button2 = document.getElementById("buttonImageChange");
     button2.addEventListener("click", changeImg);
-    var btnKorpus = document.getElementById("btnVlozKorpus");
-    btnKorpus.addEventListener("click", insertPicKorpus);
-    var btnSuflik = document.getElementById("btnVlozSuflik");
-    btnSuflik.addEventListener("click", insertSuflik);
+
     
 
-    var canvasKorpus = document.getElementById("canvasKorpus");
-    var ctxKorpus = canvasKorpus.getContext("2d");
+
     
     
     function changeColor () {
@@ -174,6 +170,16 @@
         text.innerHTML = numberSimple;
     }
     
+
+    
+    var btnKorpus = document.getElementById("btnVlozKorpus");
+    btnKorpus.addEventListener("click", insertPicKorpus);
+    var btnSuflik = document.getElementById("btnVlozSuflik");
+    btnSuflik.addEventListener("click", insertSuflik);
+    
+    var canvasKorpus = document.getElementById("canvasKorpus");
+    var ctxKorpus = canvasKorpus.getContext("2d");
+    
     function insertPicKorpus() {
         var picture = new Image();
         picture.src = "regal_korpus.jpg";
@@ -188,8 +194,8 @@
     
     function insertSuflik() {
         var picture = new Image();
-        picture.src = "suflik1.jpg";
-        ctxKorpus.drawImage(picture, 205,266,458,225)
+        picture.src = "4farby.jpg";
+        ctxKorpus.drawImage(picture, 205,265,canvasKorpus.width-10,canvasKorpus.height-10);
         
     }
     
@@ -202,10 +208,16 @@
             koordinaty.innerHTML = mouseX+" | "+mouseY;
         });
         ctxKorpus.canvas.addEventListener("click", function(e) {
-            var mouseX = event.clientX - ctxKorpus.canvas.offsetLeft;
-            var mouseY = event.clientY - ctxKorpus.canvas.offsetTop;
+            var mouseX = event.layerX;
+            var mouseY = event.layerY;
             koordinatyClick.innerHTML = mouseX+" | "+mouseY;
         })
+//        ctxKorpus.canvas.addEventListener("click", function(e) {
+//            var mouseX = event.clientX - ctxKorpus.canvas.offsetLeft;
+//            var mouseY = event.clientY - ctxKorpus.canvas.offsetTop;
+//            koordinatyClick.innerHTML = mouseX+" | "+mouseY;
+//        })
+        
     }
     
     window.addEventListener('load', function(event) {
